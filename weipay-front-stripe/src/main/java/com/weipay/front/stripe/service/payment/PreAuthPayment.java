@@ -8,13 +8,25 @@ import com.weipay.common.payment.ChannelPaymentRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Slf4j
 @Component
 public class PreAuthPayment extends  AbstractPayment{
+    public PreAuthPayment(List<PaymentMethodBuilder> builders) {
+        super(builders);
+    }
+
     @Override
-    protected PaymentIntentCreateParams buildParams(ChannelPaymentRequest request) {
+    protected boolean needConfirm() {
+        return false;
+    }
+
+    @Override
+    protected PaymentIntentCreateParams.Builder createBaseParamsBuilder(ChannelPaymentRequest request) {
         return null;
     }
+
 
     @Override
     protected PaymentIntentConfirmParams buildConfirmParams(ChannelPaymentRequest request) {
@@ -23,6 +35,6 @@ public class PreAuthPayment extends  AbstractPayment{
 
     @Override
     public PaymentType getType() {
-        return null;
+        return PaymentType.PRE_AUTH;
     }
 }

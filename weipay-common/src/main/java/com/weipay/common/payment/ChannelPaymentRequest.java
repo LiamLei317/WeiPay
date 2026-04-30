@@ -1,6 +1,7 @@
 package com.weipay.common.payment;
 
 import com.weipay.common.enums.payment.CaptureMethod;
+import com.weipay.common.enums.payment.PaymentMethodType;
 import com.weipay.common.enums.payment.PaymentType;
 import lombok.Data;
 
@@ -18,5 +19,6 @@ public class ChannelPaymentRequest {
     private Boolean confirm;
     private String returnUrl;
     private PaymentType paymentType;
+    private PaymentMethodType paymentMethodType;
 
 }

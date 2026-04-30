@@ -7,12 +7,23 @@ import com.weipay.common.payment.ChannelPaymentRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Slf4j
 @Component
 public class SubscriptionPayment extends AbstractPayment {
 
+    public SubscriptionPayment(List<PaymentMethodBuilder> builders) {
+        super(builders);
+    }
+
     @Override
-    protected PaymentIntentCreateParams buildParams(ChannelPaymentRequest request) {
+    protected boolean needConfirm() {
+        return false;
+    }
+
+    @Override
+    protected PaymentIntentCreateParams.Builder createBaseParamsBuilder(ChannelPaymentRequest request) {
         return null;
     }
 
@@ -23,6 +34,6 @@ public class SubscriptionPayment extends AbstractPayment {
 
     @Override
     public PaymentType getType() {
-        return null;
+        return PaymentType.SUBSCRIPTION;
     }
 }

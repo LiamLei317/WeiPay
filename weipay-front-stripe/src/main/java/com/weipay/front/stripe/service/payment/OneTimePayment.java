@@ -7,21 +7,38 @@ import com.weipay.common.payment.ChannelPaymentRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Slf4j
 @Component
 public class OneTimePayment extends AbstractPayment {
+    public OneTimePayment(List<PaymentMethodBuilder> builders) {
+        super(builders);
+    }
+
     @Override
-    protected PaymentIntentCreateParams buildParams(ChannelPaymentRequest request) {
-        return null;
+    protected boolean needConfirm() {
+        return true;
+    }
+
+    @Override
+    protected PaymentIntentCreateParams.Builder createBaseParamsBuilder(ChannelPaymentRequest request) {
+        return PaymentIntentCreateParams.builder()
+                .setAmount(request.getAmount().longValue())
+                .setCurrency(request.getCurrency().toLowerCase())
+                .setConfirm(false);
     }
 
     @Override
     protected PaymentIntentConfirmParams buildConfirmParams(ChannelPaymentRequest request) {
-        return null;
+        return PaymentIntentConfirmParams.builder()
+                .setPaymentMethod(request.getPaymentMethodId())
+                .setReturnUrl(request.getReturnUrl())
+                .build();
     }
 
     @Override
     public PaymentType getType() {
-        return null;
+        return PaymentType.ONE_TIME;
     }
 }

@@ -5,8 +5,10 @@ import lombok.Getter;
 @Getter
 public enum PaymentType {
     ONE_TIME("one_time", ""),
-    AUTHORIZATION("authorization", ""),
-    SUBSCRIPTION("subscription", "")
+    PRE_AUTH("pre_auth", ""),
+    SUBSCRIPTION("subscription", ""),
+    SETUP("setup", ""),
+    EXPRESS_LINK("express_link", "")
     ;
     private final String code;
     private final String desc;
